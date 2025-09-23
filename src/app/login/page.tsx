@@ -51,9 +51,9 @@ export default function Login() {
                     <div className="text-center mb-8">
                         <div className="mx-auto mb-4">
                             <img
-                                src="/logo.webp"
+                                src="/BitfactoryLogo.webp"
                                 alt="BitFactory Logo"
-                                className="h-16 w-16 mx-auto object-contain"
+                                className="h-25 w-60 mx-auto object-contain"
                             />
                         </div>
                         <h2 className="text-2xl font-semibold text-gray-900 mb-2">

@@ -13,10 +13,6 @@ export default function Login() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
 
-    // ✅ Hardcoded test credentials
-    const VALID_EMAIL = "admin@example.com"
-    const VALID_PASSWORD = "123456"
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData(prev => ({
@@ -32,15 +28,30 @@ export default function Login() {
 
         const { email, password } = formData
 
-        setTimeout(() => {
-            if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-                // ✅ Redirect to dashboard
-                router.push("/dashboard")
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            })
+
+            const data = await response.json()
+
+            if (response.ok) {
+                // ✅ Login successful - redirect to dashboard
+                router.push(data.redirectUrl || '/dashboard')
             } else {
-                setError("❌ Invalid email or password")
+                // ❌ Login failed
+                setError(data.error || 'Login failed')
             }
+        } catch (error) {
+            console.error('Login error:', error)
+            setError('Network error. Please try again.')
+        } finally {
             setIsLoading(false)
-        }, 1500)
+        }
     }
 
     return (
@@ -116,9 +127,9 @@ export default function Login() {
                         </div>
                     </form>
 
-                    {/* Test Credentials Info */}
+                    {/* Test User Info */}
                     <div className="mt-6 text-center text-sm text-gray-500">
-                        <p>💡 Use test login:</p>
+                        <p>💡 Test user created in database:</p>
                         <p>Email: <code>admin@example.com</code></p>
                         <p>Password: <code>123456</code></p>
                     </div>

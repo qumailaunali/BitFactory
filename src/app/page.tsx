@@ -1,21 +1,41 @@
+"use client";
+
+import React from "react";
+import { Box, Typography, Button } from "@mui/material";
+import Link from "next/link";
+
 export default function Home() {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
-            <div className="text-center space-y-6">
-                <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "linear-gradient(to bottom right, #1a202c, #2d3748, #4a5568)",
+                color: "white",
+                textAlign: "center",
+                p: 2,
+            }}
+        >
+            <Box sx={{ maxWidth: 600 }}>
+                <Typography variant="h3" component="h1" fontWeight="bold" gutterBottom>
                     🚧 Work in Progress
-                </h1>
-                <p className="text-gray-300 text-lg max-w-md mx-auto">
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 3 }}>
                     Our CryptoMiner Dashboard is under construction.
                     Stay tuned for something amazing!
-                </p>
-                <a
+                </Typography>
+                <Button
+                    variant="contained"
+                    color="warning"
+                    size="large"
+                    component={Link}
                     href="/login"
-                    className="inline-block px-6 py-3 rounded-lg bg-yellow-500 text-black font-semibold text-lg shadow-lg hover:bg-yellow-400 transition-colors"
                 >
                     Login
-                </a>
-            </div>
-        </div>
+                </Button>
+            </Box>
+        </Box>
     );
 }

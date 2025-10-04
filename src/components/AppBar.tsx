@@ -8,23 +8,25 @@ import {
     Menu,
     MenuItem,
     Box,
+    Button,
+    Stack,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import StorageIcon from "@mui/icons-material/Storage";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import Link from "next/link";
 import Image from "next/image";
 
 interface AppBarProps {
-    onMenuToggle: () => void;
     onDarkModeToggle: () => void;
     darkMode: boolean;
 }
 
 export default function AppBarComponent({
-                                            onMenuToggle,
                                             onDarkModeToggle,
                                             darkMode,
                                         }: AppBarProps) {
@@ -49,13 +51,8 @@ export default function AppBarComponent({
             }}
         >
             <Toolbar>
-                {/* Hamburger */}
-                <IconButton edge="start" onClick={onMenuToggle} sx={{ color: darkMode ? "white" : "black" }}>
-                    <MenuIcon />
-                </IconButton>
-
                 {/* Logo */}
-                <Box sx={{ flexGrow: 1, ml: 2 }}>
+                <Box sx={{ mr: 4, pl: 5 }}>
                     <Link href="/dashboard">
                         <Image
                             src="/BitfactoryLogo.webp"
@@ -66,6 +63,57 @@ export default function AppBarComponent({
                             style={{ cursor: "pointer", height: "auto" }}
                         />
                     </Link>
+                </Box>
+
+                {/* Navigation Links - Centered */}
+                <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'left', pl: 5 }}>
+                    <Stack direction="row" spacing={3}>
+                        <Button 
+                            component={Link} 
+                            href="/dashboard"
+                            sx={{ 
+                                color: darkMode ? "white" : "black",
+                                textTransform: "none",
+                                fontWeight: 500,
+                                px: 2,
+                                '&:hover': {
+                                    backgroundColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
+                                }
+                            }}
+                        >
+                            Dashboard
+                        </Button>
+                        <Button 
+                            component={Link} 
+                            href="/miners"
+                            sx={{ 
+                                color: darkMode ? "white" : "black",
+                                textTransform: "none",
+                                fontWeight: 500,
+                                px: 2,
+                                '&:hover': {
+                                    backgroundColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
+                                }
+                            }}
+                        >
+                            My Miners
+                        </Button>
+                        <Button 
+                            component={Link} 
+                            href="/wallet"
+                            sx={{ 
+                                color: darkMode ? "white" : "black",
+                                textTransform: "none",
+                                fontWeight: 500,
+                                px: 2,
+                                '&:hover': {
+                                    backgroundColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
+                                }
+                            }}
+                        >
+                            My Wallet
+                        </Button>
+                    </Stack>
                 </Box>
 
                 {/* Dark Mode Toggle */}

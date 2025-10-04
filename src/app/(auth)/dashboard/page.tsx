@@ -20,7 +20,7 @@
      */
 
     import React from "react";
-    import { Container, Grid, Box } from "@mui/material";
+    import { Container, Grid, Box, Typography } from "@mui/material";
     import DashboardHeader from "@/components/DashboardHeader";
     import HostedMinersCard from "@/components/HostedMinersCard";
     import MarketplaceCard from "@/components/MarketplaceCard";
@@ -29,7 +29,10 @@
     import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
     import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
     import ShowChartIcon from "@mui/icons-material/ShowChart";
+    // Add this import to your dashboard page
+    import MiningEarningsChart from "@/components/MiningEarningsChart";
 
+    
     export default function DashboardPage() {
         // demo/hardcoded values (page-level only)
         const hosted = {
@@ -45,14 +48,14 @@
 
         return (
             <Box component="main" sx={{ pt: 2, pb: 4 }}>
-                <Container maxWidth="lg">
+                <Container maxWidth="xl">
                     {/* Header */}
                     <DashboardHeader />
 
-                    {/* Top two horizontal cards */}
-                    <Grid container spacing={3} sx={{ mb: 1 }}>
-                        <Grid item xs={12} md={7}>
-                            {/* Hosted miners: left wide card on desktop */}
+                    {/* Top two horizontal cards - 50/50 split */}
+                    <Box sx={{ display: 'flex', gap: 4, mb: 2, flexDirection: { xs: 'column', md: 'row' } }}>
+                        <Box sx={{ flex: 1 }}>
+                            {/* Hosted miners: 50% width on desktop */}
                             <HostedMinersCard
                                 runningCount={hosted.runningCount}
                                 progress={hosted.progress}
@@ -62,20 +65,20 @@
                                     console.log("ADD MINER clicked from DashboardPage");
                                 }}
                             />
-                        </Grid>
+                        </Box>
 
-                        <Grid item xs={12} md={5}>
-                            {/* Marketplace card */}
+                        <Box sx={{ flex: 1 }}>
+                            {/* Marketplace card: 50% width on desktop */}
                             <MarketplaceCard
                                 runningCount={marketplace.runningCount}
                                 comingSoon={marketplace.comingSoon}
                             />
-                        </Grid>
-                    </Grid>
+                        </Box>
+                    </Box>
 
-                    {/* Row of 4 gradient info cards */}
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6} md={3}>
+                    {/* 4 gradient stat cards - Full width, 25% each */}
+                    <Box sx={{ display: 'flex', gap: 3, mb: 2, flexDirection: { xs: 'column', sm: 'row' }, flexWrap: { xs: 'nowrap', sm: 'wrap', md: 'nowrap' } }}>
+                        <Box sx={{ flex: { xs: 1, md: '1 1 25%' }, minWidth: 0 }}>
                             <GradientStatCard
                                 title="EUR Account"
                                 value="€ 0.00"
@@ -83,9 +86,9 @@
                                 gradient="linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)"
                                 icon={<EuroSymbolIcon fontSize="small" />}
                             />
-                        </Grid>
+                        </Box>
 
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Box sx={{ flex: { xs: 1, md: '1 1 25%' }, minWidth: 0 }}>
                             <GradientStatCard
                                 title="COSTS"
                                 value="€ 12.34"
@@ -93,9 +96,9 @@
                                 gradient="linear-gradient(135deg, #00BFA6 0%, #1DE9B6 100%)"
                                 icon={<AttachMoneyIcon fontSize="small" />}
                             />
-                        </Grid>
+                        </Box>
 
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Box sx={{ flex: { xs: 1, md: '1 1 25%' }, minWidth: 0 }}>
                             <GradientStatCard
                                 title="Estimated mining days left"
                                 value="7 days"
@@ -103,9 +106,9 @@
                                 gradient="linear-gradient(135deg, #2196F3 0%, #21CBF3 100%)"
                                 icon={<CalendarTodayIcon fontSize="small" />}
                             />
-                        </Grid>
+                        </Box>
     
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Box sx={{ flex: { xs: 1, md: '1 1 25%' }, minWidth: 0 }}>
                             <GradientStatCard
                                 title="Estimate monthly cost"
                                 value="€ 45.60"
@@ -113,9 +116,33 @@
                                 gradient="linear-gradient(135deg, #FFB300 0%, #FFCA28 100%)"
                                 icon={<ShowChartIcon fontSize="small" />}
                             />
-                        </Grid>
-                    </Grid>
+                        </Box>
+                    </Box>
+
+                    {/* Chart Section with Main Heading */}
+                    <Box sx={{ mt: 4 }}>
+                        <Typography 
+                            variant="h4" 
+                            sx={{ 
+                                background: 'black',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                fontWeight: 500,
+                                mb: 3,
+                                fontSize: { xs: '1.5rem', md: '2rem' },
+                                textAlign: 'left'
+                            }}
+                        >
+                            Total overview of your Miner Hosted Miners
+                        </Typography>
+                        
+                        <MiningEarningsChart 
+                            title="Daily Mining Performance" 
+                            height={400} 
+                        />
+                    </Box>
                 </Container>
             </Box>
+
         );
     }
